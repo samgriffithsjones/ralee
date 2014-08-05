@@ -67,6 +67,7 @@
 	  (yzero 780)
 	  (rotate 0)
 	  (buffername (buffer-name))
+	  tbuffername
 	  first-seqid
 	  (page 1)
 	  col
@@ -269,8 +270,9 @@ x0 y0 moveto\n")
 	  )
 	)
       (write-file file)
+      (setq tbuffername (current-buffer))
       (switch-to-buffer buffername)
-      (kill-buffer file)
+      (kill-buffer tbuffername)
       )
     )
   )
