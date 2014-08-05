@@ -103,7 +103,7 @@
   "Check if the current line is #=G[CR]"
   (save-excursion
     (beginning-of-line)
-    (looking-at "#=G[CR] ")
+    (looking-at "#=G[CR]\\( \\|\t\\)")
   ))
 
 
@@ -685,6 +685,29 @@ Works also with blocked alignments."
     (write-region (point-min) (point-max) filename nil nil nil nil)
     )
   )
+
+
+(defun ralee-clean-up-tabs ()
+  "Replace tabs with spaces, otherwise tabs cause many problems later."
+  (interactive)
+  (save-excursion
+    (ralee-find-first-line)
+    (beginning-of-line)
+    (let ((startpoint (point))
+	  col)
+      (goto-char (point-max))
+      (while (and (search-backward "\t" nil t) (> (point) startpoint))
+	(forward-char 1)
+	(setq col (current-column))
+	(delete-backward-char 1)
+	(while (< (current-column) col)
+	  (insert " ")
+	  )
+	)
+      )
+    )
+  )
+
 
 
 (provide 'ralee-tools)
