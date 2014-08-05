@@ -152,6 +152,7 @@
   (interactive)
   (freeze-undo-list)
   (freeze-modified-state)
+  (message "Painting buffer by conservation, ID colour scheme")
   (save-excursion
     (put-text-property (point-min) (point-max) 'face 'default)
     (goto-char (point-min))
@@ -175,6 +176,7 @@
   (interactive)
   (freeze-undo-list)
   (freeze-modified-state)
+  (message "Painting buffer by conservation")
   (save-excursion
     (put-text-property (point-min) (point-max) 'face 'default)
     (goto-char (point-min))
@@ -230,6 +232,8 @@
   (interactive)
   (freeze-undo-list)
   (freeze-modified-state)
+
+  (message "Painting buffer by compensatory changes")
 
   (save-excursion
     ;; if we're not on an alignment line, then jump to the first
@@ -514,6 +518,9 @@
   (interactive)
   (freeze-undo-list)
   (freeze-modified-state)
+
+  (message "Painting buffer by conservation")
+
   (save-excursion
     (put-text-property (point-min) (point-max) 'face 'default)
     (goto-char (point-min))
@@ -537,6 +544,8 @@
   (interactive)
   (freeze-undo-list)
   (freeze-modified-state)
+  (message "Painting buffer by conservation")
+
   (save-excursion
     (put-text-property (point-min) (point-max) 'face 'default)
     (goto-char (point-min))
@@ -580,6 +589,8 @@
   (interactive)
   (freeze-undo-list)
   (freeze-modified-state)
+  (message "Painting buffer by SS_cons line")
+
   (save-excursion
     (let (line
 	  pairs
@@ -604,6 +615,8 @@
   (interactive)
   (freeze-undo-list)
   (freeze-modified-state)
+  (message "Painting buffer by current structure line")
+
   (save-excursion
     (let (line
 	  pairs
