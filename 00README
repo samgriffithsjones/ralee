@@ -235,6 +235,14 @@ Bioinformatics 2005, 21:257-259
 History
 -------
 
+0.8   2014-??-??
+        - unblock-alignment now deals with #=GR lines (bug report from
+	  Larry Ruzzo).
+	- Replace tabs in input alignment with spaces (deal with Tom 
+          Jones' broken alignment formats :p )
+	- Fix write-ps bug for alignments that haven't been painted 
+          (from Karissa Sanbonmatsu).
+
 0.7   2012-03-31
 	- Public release of collected bugfixes and requests from 
 	  0.62a and 0.63a (see below).
