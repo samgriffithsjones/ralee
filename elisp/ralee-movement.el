@@ -109,6 +109,8 @@
     (if paired-column
 	(progn
 	  (setq bname (buffer-name))
+	  ;; fix for bug if other window is already another buffer
+	  ;; from Zhenjiang Xu.
 	  (if (< (safe-length (get-buffer-window-list)) 2)
 	      (split-window))  ; make another window if there isn't already one
 	  (message "column %s pairs with column %s" (current-column) paired-column)
