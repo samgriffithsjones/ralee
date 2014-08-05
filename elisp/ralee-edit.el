@@ -209,7 +209,6 @@
       (if (or (ralee-is-alignment-line) (ralee-is-markup-line))
 	  (progn
 	    (setq seqid (ralee-get-seq-id))
-	    (message seqid)
 	    (setq seqstr (ralee-get-seq-string))
 	    (if (assoc seqid seqs)
 		(setq seqstr (concat (cdr (assoc seqid seqs)) seqstr))
