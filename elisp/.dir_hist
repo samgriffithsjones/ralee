@@ -1,0 +1,101 @@
+# Tue 5 Aug 2014 10:11:20 BST
+cd elisp/
+# Tue 5 Aug 2014 10:11:45 BST
+svn update
+# Tue 5 Aug 2014 10:11:46 BST
+# Tue 5 Aug 2014 10:13:39 BST
+# Tue 5 Aug 2014 10:13:39 BST
+# Tue 5 Aug 2014 10:13:39 BST
+ls
+# Tue 5 Aug 2014 10:15:28 BST
+emacs ralee-edit.el 
+# Tue 5 Aug 2014 10:15:29 BST
+bg
+# Tue 5 Aug 2014 10:19:47 BST
+emacs ../examples/U12_blocked.stk 
+# Tue 5 Aug 2014 10:20:57 BST
+emacs ../examples/U12_blocked.stk 
+# Tue 5 Aug 2014 10:20:58 BST
+bg
+# Tue 5 Aug 2014 10:21:37 BST
+emacs ralee-edit.el 
+# Tue 5 Aug 2014 10:21:37 BST
+bg
+# Tue 5 Aug 2014 10:22:12 BST
+emacs ../examples/U12_blocked.stk 
+# Tue 5 Aug 2014 10:22:13 BST
+bg
+# Tue 5 Aug 2014 10:24:16 BST
+emacs ralee-tools.el 
+# Tue 5 Aug 2014 10:24:17 BST
+bg
+# Tue 5 Aug 2014 10:24:44 BST
+emacs ../examples/U12_blocked.stk 
+# Tue 5 Aug 2014 10:24:44 BST
+bg
+# Tue 5 Aug 2014 10:25:29 BST
+svn commit ralee-tools.el 
+# Tue 5 Aug 2014 10:25:29 BST
+# Tue 5 Aug 2014 10:25:33 BST
+# Tue 5 Aug 2014 10:25:40 BST
+# Tue 5 Aug 2014 10:25:40 BST
+ls
+# Tue 5 Aug 2014 10:25:43 BST
+ls -la
+# Tue 5 Aug 2014 10:25:55 BST
+cd -
+# Tue 5 Aug 2014 10:25:58 BST
+svn status
+# Tue 5 Aug 2014 10:26:06 BST
+# Tue 5 Aug 2014 10:26:06 BST
+ls
+# Tue 5 Aug 2014 10:26:17 BST
+ls ../.svn/entries 
+# Tue 5 Aug 2014 10:26:20 BST
+less ../.svn/entries 
+# Tue 5 Aug 2014 10:26:28 BST
+less ../.svn/wc.db 
+# Tue 5 Aug 2014 10:26:33 BST
+less ../.svn/format 
+# Tue 5 Aug 2014 10:26:38 BST
+# Tue 5 Aug 2014 10:27:04 BST
+# Tue 5 Aug 2014 10:27:42 BST
+svn commit ralee-tools.el 
+# Tue 5 Aug 2014 10:27:46 BST
+# Tue 5 Aug 2014 10:27:47 BST
+# Tue 5 Aug 2014 10:27:52 BST
+# Tue 5 Aug 2014 10:27:59 BST
+# Tue 5 Aug 2014 10:29:12 BST
+svn commit ralee-tools.el 
+# Tue 5 Aug 2014 10:29:20 BST
+# Tue 5 Aug 2014 10:29:32 BST
+ifconfig 
+# Tue 5 Aug 2014 10:29:51 BST
+ifconfig 
+# Tue 5 Aug 2014 10:29:52 BST
+# Tue 5 Aug 2014 10:29:52 BST
+# Tue 5 Aug 2014 10:29:52 BST
+# Tue 5 Aug 2014 10:30:07 BST
+svn status
+# Tue 5 Aug 2014 10:30:38 BST
+svn commit ralee-tools.el 
+# Tue 5 Aug 2014 10:30:39 BST
+# Tue 5 Aug 2014 10:31:23 BST
+ls
+# Tue 5 Aug 2014 10:31:27 BST
+ls .svn/
+# Tue 5 Aug 2014 10:31:28 BST
+ls
+# Tue 5 Aug 2014 10:31:29 BST
+ls -a
+# Tue 5 Aug 2014 10:31:54 BST
+cd elisp/
+# Tue 5 Aug 2014 10:31:55 BST
+ls
+# Tue 5 Aug 2014 10:42:12 BST
+less ../LICENSE 
+# Tue 5 Aug 2014 10:42:24 BST
+less ../00README 
+# Tue 5 Aug 2014 10:44:19 BST
+# Tue 5 Aug 2014 10:44:22 BST
+git
