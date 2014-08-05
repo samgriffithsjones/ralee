@@ -22,7 +22,7 @@
 ; Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 
-(defvar check-ralee-version 0.7
+(defvar check-ralee-version 0.71
   "This version.")
 
 ;; interval doesn't actually do anything yet, but
@@ -193,20 +193,28 @@ Turning on ralee-mode runs the hook `ralee-mode-hook'."
   ; protect mode definition, but the keymap redefinition then
   ; screws up delete and backspace in the minibuffer aswell
 ;  (protect-mode t) 
-  (run-hooks 'ralee-mode-hook)       ; Finally, this permits the user to
-					; customize the mode with a hook
+
+  (setq-default indent-tabs-mode nil) ;; use spaces instead of tabs
+  (ralee-clean-up-tabs) ;; remove any tabs that were there already
+
+  (run-hooks 'ralee-mode-hook)       ;; This permits the user to
+				     ;; customize the mode with a hook
 
   ;; Unblock the alignment
   (if (and ralee-auto-unblock (ralee-blocked-alignment-p))
       (unblock-alignment)
     )
 
+  ;; explicitely set the face, otherwise write-ps fails on alignments
+  ;; that are not painted
+  (put-text-property (point-min) (point-max) 'face 'default)
   ;; should do this in a hook as well but big things screw up
   ;; color the buffer by default, unless it is very large
   (if (< (point-max) 100000)
       (paint-buffer-by-ss)
     )
-  )
 
+  (message (concat "You are using RALEE version " (number-to-string check-ralee-version)))
+  )
 
 (provide 'ralee-mode)
