@@ -109,10 +109,10 @@
     (if paired-column
 	(progn
 	  (setq bname (buffer-name))
-	  (if (one-window-p)
+	  (if (< (safe-length (get-buffer-window-list)) 2)
 	      (split-window))  ; make another window if there isn't already one
 	  (message "column %s pairs with column %s" (current-column) paired-column)
-	  (select-window (next-window))
+	  (select-window (nth 1 (get-buffer-window-list)))
 	  (switch-to-buffer bname)
 	  (goto-line (1+ line)) ;; not sure why 1+, but seems to work
 	  (move-to-column paired-column)
