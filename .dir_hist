@@ -40,3 +40,17 @@ rm elisp/svn-commit.*
 # Tue 5 Aug 2014 10:59:51 BST
 # Tue 5 Aug 2014 11:00:03 BST
 git init
+# Tue 5 Aug 2014 11:01:02 BST
+git add .
+# Tue 5 Aug 2014 11:01:15 BST
+git commit -m 'initial commit comment'
+# Tue 5 Aug 2014 11:01:57 BST
+git remote add origin git@github.com:/samgriffithsjones/ralee.git
+# Tue 5 Aug 2014 11:02:11 BST
+git pull origin master
+# Tue 5 Aug 2014 11:02:40 BST
+ls
+# Tue 5 Aug 2014 11:03:25 BST
+rm LICENSE 
+# Tue 5 Aug 2014 11:03:28 BST
+git pull origin master
