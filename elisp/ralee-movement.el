@@ -102,15 +102,18 @@
 - make the other window if necessary"
   (interactive)
   (let (paired-column
-	line)
+	line
+	bname)
     (setq line (current-line))
     (setq paired-column (ralee-paired-column (current-column)))
     (if paired-column
 	(progn
+	  (setq bname (buffer-name))
 	  (if (one-window-p)
 	      (split-window))  ; make another window if there isn't already one
 	  (message "column %s pairs with column %s" (current-column) paired-column)
 	  (select-window (next-window))
+	  (switch-to-buffer bname)
 	  (goto-line (1+ line)) ;; not sure why 1+, but seems to work
 	  (move-to-column paired-column)
 	  (recenter))
