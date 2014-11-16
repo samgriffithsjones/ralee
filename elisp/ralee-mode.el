@@ -22,13 +22,16 @@
 ; Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 
-(defvar check-ralee-version 0.71
+(defvar check-ralee-version 0.8
   "This version.")
 
 ;; interval doesn't actually do anything yet, but
-;; set to nil to disable checks
-(defcustom check-for-update-interval 7
-  "Number of days between checks for updates.")
+;; set to 0 to disable checks
+(defcustom ralee-check-for-update-interval 7
+  "Number of days between checks for updates.  Set to 0 to diable future checks."
+  :type '(integer)
+  :group 'ralee
+  )
 
 (defcustom ralee-auto-unblock t
   "Automatically unblock blocked alignments on load."
@@ -36,26 +39,42 @@
   :group 'ralee
   )
 
-(defvar ralee-url "http://personalpages.manchester.ac.uk/staff/sam.griffiths-jones/software/ralee/index.html"
+(defvar ralee-url "http://sgjlab.org/ralee/"
   "Url to load for updates.")
 
+(defvar ralee-check-update-url "http://sgjlab.org/ralee-version.html"
+  "Url to check for updates.")
+
+
+(require 'url)
+
 (defun check-for-updates ()
-  "check for updates"
-  (interactive)
-  (if (and check-for-update-interval
-	   (executable-find "ralee-check-update.pl"))
-      (let ((version (string-to-number (shell-command-to-string "ralee-check-update.pl"))))
-	(if (< version 0)
-	    (message-box "Failed to connect to RALEE website to check for updates.\nPerhaps you need to specify a proxy server (using the environment variable HTTP_PROXY).\nYou can disable future checks in the 'Edit/Options' menu.")
-	  (if (> version check-ralee-version)
-	      (if (x-popup-dialog t '("New version available.\nWould you like to send your browser to the RALEE website?" ("yes".t) ("no".nil)))
-		  (browse-url ralee-url)
-		)
-	    )
-	  )
+  "check for updates within emacs session"
+  (if (> ralee-check-for-update-interval 0)
+      (progn
+	(message "Checking for updates")
+	(url-retrieve ralee-check-update-url (lambda (status) (parse-ralee-version (current-buffer))))
 	)
     )
   )
+
+(defun parse-ralee-version (buffer) 
+  "parse ralee version from URL"
+  (search-forward "VERSION ")
+  (looking-at "[0-9.]+")
+  (setq version (string-to-number (match-string-no-properties 0)))
+
+  (if (> version check-ralee-version)
+      (if (y-or-n-p "New RALEE version available. Would you like to send your browser to the RALEE website?")
+	  (progn
+	    (browse-url ralee-url)
+	    (message (concat "OK.  Directing your browser to " ralee-url))
+	    )
+	(message (concat "OK.  You should visit " ralee-url " to update soon.  Set the ralee-check-for-update-interval variable to 0 to disable future checks."))
+	)
+    )
+  )
+
 
 (require 'ralee-faces)
 (require 'ralee-helpers)
