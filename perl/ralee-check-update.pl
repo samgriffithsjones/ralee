@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use LWP;
 
-my $url = "http://personalpages.manchester.ac.uk/staff/sam.griffiths-jones/software/ralee/version.html";
+my $url = shift || "http://sgjlab.org/ralee-version.html";
 my $ua = new LWP::UserAgent;
 $ua->env_proxy;
 $ua->timeout(10);
