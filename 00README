@@ -1,7 +1,7 @@
 RALEE -- RNA alignment editor in Emacs
 --------------------------------------
 
-Version 0.7 -- 2012-03-31
+Version 0.8 -- 2014-11-16
 
 
 What have we here then?
@@ -10,8 +10,8 @@ What have we here then?
 RALEE is a major mode for the emacs editor that adds functionality to
 aid the viewing and editing of alignments of structured RNAs.  It was
 written by and primarily for curators of the Rfam database
-(http://rfam.sanger.ac.uk/), who are always wanting to do things that
-available multiple sequence alignment editors don't allow!
+(http://rfam.xfam.org/), who are always wanting to do things that
+available multiple sequence alignment editors don't allow.
 
 
 
@@ -20,7 +20,7 @@ Requirements
 
    - ralee-mode.tar.gz
 	- get the lastest version from
-  	  http://personalpages.manchester.ac.uk/staff/sam.griffiths-jones/software/ralee/
+  	  http://sgjlab.org/ralee/
 
    - Emacs 21 or later
 	- http://www.gnu.org/software/emacs/emacs.html
@@ -235,13 +235,16 @@ Bioinformatics 2005, 21:257-259
 History
 -------
 
-0.8   2014-??-??
+0.8   2014-11-16
         - unblock-alignment now deals with #=GR lines (bug report from
 	  Larry Ruzzo).
 	- Replace tabs in input alignment with spaces (deal with Tom 
           Jones' broken alignment formats :p )
 	- Fix write-ps bug for alignments that haven't been painted 
           (from Karissa Sanbonmatsu).
+	- Added some useful message outputs.
+        - Code that checks for updates is more friendly and no longer
+          uses external perl script.
 
 0.7   2012-03-31
 	- Public release of collected bugfixes and requests from 
@@ -369,4 +372,4 @@ along with RALEE; if not, write to the Free Software Foundation, Inc.,
 
 
 -------------------------------
-2012-03-31  Sam Griffiths-Jones
+2014-11-16  Sam Griffiths-Jones
