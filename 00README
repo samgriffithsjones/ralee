@@ -236,8 +236,8 @@ History
 -------
 
 0.8   2014-11-16
-        - unblock-alignment now deals with #=GR lines (bug report from
-	  Larry Ruzzo).
+        - unblock-alignment now deals with #=GR lines (bug reports 
+          from Larry Ruzzo and Paul Gardner).
 	- Replace tabs in input alignment with spaces (deal with Tom 
           Jones' broken alignment formats :p )
 	- Fix write-ps bug for alignments that haven't been painted 
