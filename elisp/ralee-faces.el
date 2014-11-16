@@ -1,10 +1,9 @@
 ;;; ralee-faces.el
 
-; Copyright (c) 2004-2011 Sam Griffiths-Jones
+; Copyright (c) 2004-2014 Sam Griffiths-Jones
 ; Author: Sam Griffiths-Jones <sam.griffiths-jones@manchester.ac.uk>
 ;
-; This is part of RALEE -- see
-; http://personalpages.manchester.ac.uk/staff/sam.griffiths-jones/software/ralee/
+; This is part of RALEE -- see http://sgjlab.org/ralee/
 ; and the 00README file that should accompany this file.
 ;
 ; RALEE is free software; you can redistribute it and/or modify it
