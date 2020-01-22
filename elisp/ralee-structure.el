@@ -230,9 +230,6 @@ Returns a list of pairs in order of increasing closing base."
 
 
 
-
-
-
 (defun ralee-paired-column (column)
   "return the pair of <column>"
   (let (pair-column
@@ -257,9 +254,23 @@ Returns a list of pairs in order of increasing closing base."
 (defun remove-base-pair ()
   "delete the base pair involving the current column"
   (interactive)
+  (let ((c2 (ralee-paired-column (current-column))))
+    (if c2
+	(progn
+	  (remove-base-pair-by-column-number (current-column))
+	  ;(message "Removed pair between columns %s and %s" (current-column) c2)
+	  )
+      ;(message "No pair!")
+      )
+    )
+  )
+
+
+(defun remove-base-pair-by-column-number (c1)
+  "delete the base pair by column number"
+  (interactive)
   (save-excursion
-    (let ((c1 (current-column))
-	  (c2 (ralee-paired-column (current-column))))
+    (let ((c2 (ralee-paired-column (current-column))))
       (if c2
 	  (progn
 	    (goto-char (point-min))
@@ -279,6 +290,25 @@ Returns a list of pairs in order of increasing closing base."
   )
 
 
+(defun add-base-pair-by-column-numbers (c1 c2)
+  "add a base pair between specified columns"
+  (interactive)
+  (let ((cols (sort (list c1 c2) '<)))
+    (goto-char (point-min))
+    (search-forward "#=GC SS_cons")
+    (move-to-column (car cols))
+    (delete-char 1)
+    (insert "(")
+    ;; (cdr cols) doesn't work here -- wrong type?
+    (move-to-column (nth 1 cols))
+    (delete-char 1)
+    (insert ")")
+    (message "Added pair between columns %s and %s" c1 c2)
+    )
+  )
+
+
+
 (defun add-base-pair ()
   "add a base pair between current and marked columns"
   (interactive)
@@ -289,27 +319,25 @@ Returns a list of pairs in order of increasing closing base."
 	)
       (goto-char (mark))
       (if (ralee-is-alignment-column)
-	  (setq c2 (current-column))
-	)
-
-      (if (and c1 c2)
-	  (let ((cols (sort (list c1 c2) '<)))
-	    (goto-char (point-min))
-	    (search-forward "#=GC SS_cons")
-	    (move-to-column (car cols))
-	    (delete-char 1)
-	    (insert "(")
-	    ;; (cdr cols) doesn't work here -- wrong type?
-	    (move-to-column (nth 1 cols))
-	    (delete-char 1)
-	    (insert ")")
-	    (message "Added pair between columns %s and %s" c1 c2)
+	  (progn
+	    (setq c2 (current-column))
+	    (pop-mark)
 	    )
-	;; else
+	)
+      (if (and c1 c2)
+	  (add-base-pair-by-column-numbers c1 c2)
 	(message "Pairing column is undefined - define with C-space")
 	)
       )
     )
+  )
+
+
+(defun copy-base-pair-to-consensus ()
+  "copy the current base pair into the consense structure"
+  (interactive)
+  (save-excursion)
+
   )
 
 
