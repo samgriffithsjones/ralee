@@ -25,6 +25,7 @@
 (defvar ralee-nse-regex (concat ralee-seqid-regex "/[0-9]+-[0-9]+"))
 (defvar ralee-seq-regex "[A-Za-z~._,:;-]+")
 (defvar ralee-gap-regex "[._,~:;-]")
+(defvar ralee-residue-regex "[A-Za-z]")
 (defvar ralee-str-regex "[][<>{}()._,~:;-]+")
 
 (defvar ralee-nucleotide-regex (list
@@ -707,6 +708,66 @@ Works also with blocked alignments."
     )
   )
 
+
+(defun ralee-is-aligned-residue ()
+  "check if the current position is an aligned residue"
+  (if (ralee-is-alignment-column)
+      (if (ralee-is-alignment-line)
+	  (if (looking-at ralee-residue-regex)
+	      t
+	    nil
+	    )
+	nil
+	)
+    nil
+    )
+  )
+
+
+(defun show-current-residue-number ()
+  "show the sequence name and residue number"
+  (interactive)
+  (if (ralee-is-aligned-residue)
+      (progn
+	(let (id res)
+	  (setq id (nth 0 (ralee-get-name-start-end)))
+	  (setq res (ralee-get-residue-number))
+	  (message "%s/%s" id res)
+	  )
+	)
+    )
+  )
+
+
+(defun ralee-get-residue-number ()
+  "get the number of the current residue"
+  (interactive)
+  (if (ralee-is-aligned-residue)
+      (progn
+	(save-excursion
+	  (let (col st firstcol (rescount 0) rtn)
+	    (setq col (get-column-number))
+	    (setq st (nth 1 (ralee-get-name-start-end)))
+	    (if (equal st nil)
+		(setq st 0)
+	      )
+	    (ralee-find-first-column)
+	    (setq firstcol (get-column-number))
+	    
+	    (while (< (current-column) col)
+	      (if (ralee-is-aligned-residue)
+		  (setq rescount (1+ rescount))
+		)
+	      (forward-char 1)
+	      )
+	    (setq rtn (+ st rescount))
+	    rtn
+	    )
+	  )
+	)
+    )
+  )
+  
 
 
 (provide 'ralee-tools)

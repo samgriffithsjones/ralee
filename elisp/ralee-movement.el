@@ -21,12 +21,12 @@
 ; Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 
-
-
 (defun jump-right ()
   "move the pointer a screen to the right"
   (interactive)
-  (move-to-column (+ (current-column) (/ (* (window-width) 2) 3))))
+  (move-to-column (+ (current-column) (/ (* (window-width) 2) 3)))
+  (show-current-residue-number)
+  )
 
 
 (defun jump-left ()
@@ -38,6 +38,7 @@
       )
     (move-to-column col)
     )
+  (show-current-residue-number)
   )
 
 
@@ -53,6 +54,7 @@
       )
     (move-to-column column)
     )
+  (show-current-residue-number)
   )
 
 
@@ -68,6 +70,47 @@
       )
     (move-to-column column)
     )
+  (show-current-residue-number)
+  )
+
+
+(defun pointer-right ()
+  "move the pointer one char right"
+  (interactive)
+  (move-to-column (1+ (current-column)))
+  (show-current-residue-number)
+  )
+
+
+(defun pointer-left ()
+  "move the pointer one char left"
+  (interactive)
+  (move-to-column (1- (current-column)))
+  (show-current-residue-number)
+  )
+
+
+(defun pointer-up ()
+  "move the pointer one char up"
+  (interactive)
+  (let ((column (current-column))
+	(line (current-line)))
+    (goto-line line) ;; why isn't this line-1?
+    (move-to-column column)
+    )
+  (show-current-residue-number)
+  )
+
+
+(defun pointer-down ()
+  "move the pointer one char down"
+  (interactive)
+  (let ((column (current-column))
+	(line (current-line)))
+    (goto-line (+ line 2)) ;; why isn't this line+1?
+    (move-to-column column)
+    )
+  (show-current-residue-number)
   )
 
 
@@ -92,7 +135,9 @@
     (if paired-column
 	(progn
 	  (message "column %s pairs with column %s" (current-column) paired-column)
-	  (move-to-column paired-column))
+	  (move-to-column paired-column)
+	  (show-current-residue-number)
+	  )
       (message "No pair!"))))
 
 
@@ -117,8 +162,17 @@
 	  (switch-to-buffer bname)
 	  (goto-line (1+ line)) ;; not sure why 1+, but seems to work
 	  (move-to-column paired-column)
+	  (show-current-residue-number)
 	  (recenter))
       (message "No pair!"))))
+
+
+(defun ralee-handle-mouse-click ()
+  "handle mouse click"
+  (interactive)
+  (toggle-highlight-current-line)
+  (show-current-residue-number)
+  )
 
 
 

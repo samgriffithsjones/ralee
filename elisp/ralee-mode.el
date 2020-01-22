@@ -111,7 +111,7 @@
   (define-key ralee-mode-map "\C-c\C-c" 'paint-buffer-by-cons)
   (define-key ralee-mode-map "\C-c\C-q" 'paint-buffer-by-cons-generic)
   (define-key ralee-mode-map [(control ?#)] 'toggle-paint-char)
-  (define-key ralee-mode-map [mouse-1] 'toggle-highlight-current-line)
+  (define-key ralee-mode-map [mouse-1] 'ralee-handle-mouse-click)
 
   (define-key ralee-mode-map [(control ?\\)] 'define-block)
   (define-key ralee-mode-map [(control c) (control ?\\)] 'undefine-block)
@@ -141,10 +141,13 @@
   (define-key ralee-mode-map [(meta right)] 'jump-right)
   (define-key ralee-mode-map [(meta up)] 'jump-up)
   (define-key ralee-mode-map [(meta down)] 'jump-down)
+  (define-key ralee-mode-map [(left)] 'pointer-left)
+  (define-key ralee-mode-map [(right)] 'pointer-right)
+  (define-key ralee-mode-map [(up)] 'pointer-up)
+  (define-key ralee-mode-map [(down)] 'pointer-down)
 
   (define-key ralee-mode-map [(control c) (control ?=)] 'add-base-pair)
   (define-key ralee-mode-map [(control c) (control ?-)] 'remove-base-pair)
-
 
   (if (featurep 'xemacs)
       () ;; the following stuff fails in xemacs
@@ -160,7 +163,7 @@
 ;  (define-key ralee-mode-map "." 'insert-gap)     ;; only in protect mode
 ;  (define-key ralee-mode-map "\C-d" 'delete-gap)  ;; only in protect mode
 
-)
+  )
 
 ;; need to initialise this before menus
 (defvar protect-mode nil)
@@ -197,7 +200,6 @@
 
 (defvar ralee-gap-symbol "."
   "The gap symbol")
-
 
 (defun ralee-mode ()
   "Major mode for RALEE alignment editing
