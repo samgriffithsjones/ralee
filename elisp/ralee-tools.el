@@ -749,7 +749,7 @@ Works also with blocked alignments."
 	    (setq col (get-column-number))
 	    (setq st (nth 1 (ralee-get-name-start-end)))
 	    (if (equal st nil)
-		(setq st 0)
+		(setq st 1)
 	      )
 	    (ralee-find-first-column)
 	    (setq firstcol (get-column-number))
