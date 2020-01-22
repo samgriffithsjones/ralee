@@ -137,6 +137,10 @@
   (define-key ralee-mode-map "\C-[F" 'jump-right)
   (define-key ralee-mode-map [(control up)] 'jump-up)
   (define-key ralee-mode-map [(control down)] 'jump-down)
+  (define-key ralee-mode-map [(meta left)] 'jump-left)
+  (define-key ralee-mode-map [(meta right)] 'jump-right)
+  (define-key ralee-mode-map [(meta up)] 'jump-up)
+  (define-key ralee-mode-map [(meta down)] 'jump-down)
 
   (define-key ralee-mode-map [(control c) (control ?=)] 'add-base-pair)
   (define-key ralee-mode-map [(control c) (control ?-)] 'remove-base-pair)
