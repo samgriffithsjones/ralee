@@ -125,8 +125,9 @@
   (define-key ralee-mode-map [(control ?>)] 'throw-sequence-right)
 
   (define-key ralee-mode-map "\C-c\C-f" 'fold-sequence)
-  (define-key ralee-mode-map "\C-c\C-g" 'fetch-sequence)
+  (define-key ralee-mode-map "\C-c\C-g" 'fold-alignment)
   (define-key ralee-mode-map "\C-c\C-h" 'show-sequence-description)
+  (define-key ralee-mode-map "\C-c\C-j" 'fetch-sequence)
 
   (define-key ralee-mode-map "\C-c\C-s" 'ralee-motif-search)
   (define-key ralee-mode-map "\C-c\C-p" 'jump-to-pair)
@@ -148,6 +149,7 @@
 
   (define-key ralee-mode-map [(control c) (control ?=)] 'add-base-pair)
   (define-key ralee-mode-map [(control c) (control ?-)] 'remove-base-pair)
+  (define-key ralee-mode-map [(control c) (control ?[)] 'copy-base-pair-to-cons)
 
   (if (featurep 'xemacs)
       () ;; the following stuff fails in xemacs

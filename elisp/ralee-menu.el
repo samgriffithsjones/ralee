@@ -292,6 +292,9 @@
     (setq menu-bar-final-items (cons 'buffer menu-bar-final-items))
 
     ; structure menu items
+    (define-key menu-bar-structure-menu [copy-base-pair-to-cons]
+      '(menu-item "Copy base pair to SS_cons" copy-base-pair-to-cons
+		  :help "Copy current base pair to consensus structure line"))
     (define-key menu-bar-structure-menu [remove-base-pair]
       '(menu-item "Remove base pair" remove-base-pair
 		  :help "Remove base pair involving the current column"))

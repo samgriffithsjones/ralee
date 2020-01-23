@@ -735,6 +735,7 @@ Works also with blocked alignments."
 	  (message "%s/%s" id res)
 	  )
 	)
+    (message "")
     )
   )
 

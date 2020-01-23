@@ -231,12 +231,18 @@ Returns a list of pairs in order of increasing closing base."
 
 
 (defun ralee-paired-column (column)
-  "return the pair of <column>"
-  (let (pair-column
-	pairs
-	pair
-	structure-line)
+  "return the pair of <column> in consensus"
+  (let (structure-line)
     (setq structure-line (ralee-get-ss-line))
+    (ralee-paired-column-by-ss-line structure-line column)
+    )
+  )
+
+(defun ralee-paired-column-by-ss-line (structure-line column)
+  "return the pair of <column>"
+  (let (paired-column
+	pairs
+	pair)
     (setq pairs (ralee-get-base-pairs structure-line))
     (setq pair (assoc column pairs))
     (if pair
@@ -293,17 +299,19 @@ Returns a list of pairs in order of increasing closing base."
 (defun add-base-pair-by-column-numbers (c1 c2)
   "add a base pair between specified columns"
   (interactive)
-  (let ((cols (sort (list c1 c2) '<)))
-    (goto-char (point-min))
-    (search-forward "#=GC SS_cons")
-    (move-to-column (car cols))
-    (delete-char 1)
-    (insert "(")
-    ;; (cdr cols) doesn't work here -- wrong type?
-    (move-to-column (nth 1 cols))
-    (delete-char 1)
-    (insert ")")
-    (message "Added pair between columns %s and %s" c1 c2)
+  (save-excursion
+    (let ((cols (sort (list c1 c2) '<)))
+      (goto-char (point-min))
+      (search-forward "#=GC SS_cons")
+      (move-to-column (car cols))
+      (delete-char 1)
+      (insert "(")
+      ;; (cdr cols) doesn't work here -- wrong type?
+      (move-to-column (nth 1 cols))
+      (delete-char 1)
+      (insert ")")
+      (message "Added pair between columns %s and %s" c1 c2)
+      )
     )
   )
 
@@ -333,11 +341,24 @@ Returns a list of pairs in order of increasing closing base."
   )
 
 
-(defun copy-base-pair-to-consensus ()
+(defun copy-base-pair-to-cons ()
   "copy the current base pair into the consense structure"
   (interactive)
   (save-excursion)
-
+  (if (ralee-is-markup-line)
+      (progn
+	(let ((structure-line (ralee-get-current-ss-line))
+	      (c1 (current-column))
+	      c2)
+	  (setq c2 (ralee-paired-column-by-ss-line structure-line c1))
+	  (if c2
+	      (add-base-pair-by-column-numbers c1 c2)
+	    (message "No pair!")
+	    )
+	  )
+	)
+    (message "This isn't a structure line")
+    )
   )
 
 
