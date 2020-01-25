@@ -27,6 +27,8 @@
 (defvar ralee-gap-regex "[._,~:;-]")
 (defvar ralee-residue-regex "[A-Za-z]")
 (defvar ralee-str-regex "[][<>{}()._,~:;-]+")
+(defvar ralee-base-open-regex "[[<{(]")
+(defvar ralee-base-close-regex "[]>})]")
 
 (defvar ralee-nucleotide-regex (list
 				( cons "A" "A" )
@@ -768,7 +770,20 @@ Works also with blocked alignments."
 	)
     )
   )
-  
+
+
+(defun ralee-count-str (regexp str)
+  "count instances of regexp in string"
+  (let ((start 0)
+	(count 0))
+    (while (string-match regexp str start)
+      (setq start (match-end 0))
+      (setq count (1+ count))
+      )
+    count
+    )
+  )
+
 
 
 (provide 'ralee-tools)
