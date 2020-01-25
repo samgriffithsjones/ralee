@@ -124,6 +124,9 @@
   (define-key ralee-mode-map [(control ?<)] 'throw-sequence-left)
   (define-key ralee-mode-map [(control ?>)] 'throw-sequence-right)
 
+  (define-key ralee-mode-map [(control c) (control ?,)] 'trim-left)
+  (define-key ralee-mode-map [(control c) (control ?.)] 'trim-right)
+  
   (define-key ralee-mode-map "\C-c\C-f" 'fold-sequence)
   (define-key ralee-mode-map "\C-c\C-g" 'fold-alignment)
   (define-key ralee-mode-map "\C-c\C-h" 'show-sequence-description)
@@ -225,7 +228,7 @@ Turning on ralee-mode runs the hook `ralee-mode-hook'."
 
   (run-hooks 'ralee-mode-hook)       ;; This permits the user to
 				     ;; customize the mode with a hook
-
+  
   ;; Unblock the alignment
   (if (and ralee-auto-unblock (ralee-blocked-alignment-p))
       (unblock-alignment)
