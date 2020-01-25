@@ -263,6 +263,31 @@
   (save-excursion
     ;; trim the sequence itself
     (let ((start (point)))
+      (if (ralee-is-markup-line)
+	  (progn
+	    ;; need to remove base pairs properly in markup lines
+	    (if right
+		(progn
+		  (end-of-line)
+		  (while (>= (point) start)
+		    (remove-base-pair)
+		    (sit-for 0.1)
+		    (forward-char -1)
+		    (sit-for 0.1)
+		    )
+		  )
+	      ;; else
+	      (ralee-find-first-column)
+	      (while (< (point) start)
+		(remove-base-pair)
+		(sit-for 0.1)
+		(forward-char 1)
+		(sit-for 0.1)
+		)
+	      )
+	    )
+	)
+	;; now delete the region
       (if right
 	  (end-of-line)
 	(ralee-find-first-column)
@@ -384,9 +409,17 @@
 				  (save-restriction
 				    (narrow-to-region (point) eol)
 				    (perform-replace (nth 0 oldnew) (nth 1 oldnew) nil nil nil)
+				    ;; need to pad here, otherwise a change in length of nse
+				    ;; in a GR line screws up removing base pairs
+				    (let ((n (- (length (nth 1 oldnew)) (length (nth 0 oldnew)))))
+				      (ralee-find-first-column)
+				      (if (> n 0)
+					  (delete-backward-char n)
+					(insert (make-string (- 0 n) ?\s))
+					)
+				      )
 				    )
 				  )
-
 				)
 			      )
 			    )

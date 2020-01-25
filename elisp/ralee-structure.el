@@ -21,6 +21,7 @@
 ; Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 
+
 (defun ralee-helix-map (pairs)
   "Calculate helix boundaries based on pairs."
   (let ((helix 0)
@@ -76,16 +77,26 @@
   )
 
 
-(defun ralee-get-ss-line ()
-  "Get the SS_cons line"
+(defun ralee-get-ss-line (&optional curr-line)
+  "Get the SS_cons line or current structure line"
   (save-excursion
-    (let (beg end)
-      (goto-char (point-min))
-      (search-forward "#=GC SS_cons")
-      (beginning-of-line) (setq beg (point))
-      (end-of-line) (setq end (point))
-      (copy-region-as-kill beg end)
-      (car kill-ring)
+    (let (beg end do-it)
+      (if (and (ralee-is-markup-line) curr-line)
+	  (setq do-it t)
+	;; else
+	(goto-char (point-min))
+	(if (search-forward "#=GC SS_cons")
+	    (setq do-it t)
+	  )
+	)
+      (if do-it
+	  (progn
+	    (beginning-of-line) (setq beg (point))
+	    (end-of-line) (setq end (point))
+	    (copy-region-as-kill beg end)
+	    (car kill-ring)
+	    )
+	)
       )
     )
   )
@@ -229,11 +240,28 @@ Returns a list of pairs in order of increasing closing base."
   )
 
 
+(defun check-sscons (&optional quiet)
+  "Check the SS_cons line has matching open and closed parentheses"
+  (interactive)
+  (let ((structure-line (ralee-get-ss-line))
+	opencount closecount)
+    (setq opencount (ralee-count-str ralee-base-open-regex structure-line))
+    (setq closecount (ralee-count-str ralee-base-close-regex structure-line))
+    (if (= opencount closecount)
+	nil
+      (if quiet
+	  ()
+	(message "WARNING: Your SS_cons line is invalid [%s open, %s close]" opencount closecount)
+	)
+      t
+      )
+    )
+  )
 
-(defun ralee-paired-column (column)
+(defun ralee-paired-column (column &optional curr-line)
   "return the pair of <column> in consensus"
   (let (structure-line)
-    (setq structure-line (ralee-get-ss-line))
+    (setq structure-line (ralee-get-ss-line curr-line))
     (ralee-paired-column-by-ss-line structure-line column)
     )
   )
@@ -260,10 +288,15 @@ Returns a list of pairs in order of increasing closing base."
 (defun remove-base-pair ()
   "delete the base pair involving the current column"
   (interactive)
-  (let ((c2 (ralee-paired-column (current-column))))
+  (let (c2 
+	(to-current-line nil))
+    (if (ralee-is-markup-line)
+	(setq to-current-line t)
+      )
+    (setq c2 (ralee-paired-column (current-column) to-current-line))
     (if c2
 	(progn
-	  (remove-base-pair-by-column-number (current-column))
+	  (remove-base-pair-by-column-number (current-column) to-current-line)
 	  ;(message "Removed pair between columns %s and %s" (current-column) c2)
 	  )
       ;(message "No pair!")
@@ -272,15 +305,19 @@ Returns a list of pairs in order of increasing closing base."
   )
 
 
-(defun remove-base-pair-by-column-number (c1)
+(defun remove-base-pair-by-column-number (c1 &optional to-current-line)
   "delete the base pair by column number"
   (interactive)
   (save-excursion
-    (let ((c2 (ralee-paired-column (current-column))))
+    (let ((c2 (ralee-paired-column (current-column) to-current-line)))
       (if c2
 	  (progn
-	    (goto-char (point-min))
-	    (search-forward "#=GC SS_cons")
+	    (if (and (ralee-is-markup-line) to-current-line)
+		()
+	      ;else
+	      (goto-char (point-min))
+	      (search-forward "#=GC SS_cons")
+	      )
 	    (move-to-column c1)
 	    (delete-char 1)
 	    (insert ".")
@@ -296,13 +333,17 @@ Returns a list of pairs in order of increasing closing base."
   )
 
 
-(defun add-base-pair-by-column-numbers (c1 c2)
+(defun add-base-pair-by-column-numbers (c1 c2 &optional to-current-line)
   "add a base pair between specified columns"
   (interactive)
   (save-excursion
     (let ((cols (sort (list c1 c2) '<)))
-      (goto-char (point-min))
-      (search-forward "#=GC SS_cons")
+      (if (and (ralee-is-markup-line) to-current-line)
+	  ()
+	;else
+	(goto-char (point-min))
+	(search-forward "#=GC SS_cons")
+	)
       (move-to-column (car cols))
       (delete-char 1)
       (insert "(")
@@ -321,7 +362,11 @@ Returns a list of pairs in order of increasing closing base."
   "add a base pair between current and marked columns"
   (interactive)
   (save-excursion
-    (let (c1 c2)
+    (let ((to-current-line nil)
+	  c1 c2)
+      (if (ralee-is-markup-line)
+	  (setq to-current-line t)
+	)
       (if (ralee-is-alignment-column)
 	  (setq c1 (current-column))
 	)
@@ -333,7 +378,7 @@ Returns a list of pairs in order of increasing closing base."
 	    )
 	)
       (if (and c1 c2)
-	  (add-base-pair-by-column-numbers c1 c2)
+	  (add-base-pair-by-column-numbers c1 c2 to-current-line)
 	(message "Pairing column is undefined - define with C-space")
 	)
       )
@@ -342,7 +387,7 @@ Returns a list of pairs in order of increasing closing base."
 
 
 (defun copy-base-pair-to-cons ()
-  "copy the current base pair into the consense structure"
+  "copy the current base pair into the consensus structure"
   (interactive)
   (save-excursion)
   (if (ralee-is-markup-line)
