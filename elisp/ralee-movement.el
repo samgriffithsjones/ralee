@@ -172,8 +172,8 @@
   (interactive)
   (toggle-highlight-current-line)
   (show-current-residue-number)
+  (check-sscons)
   )
-
 
 
 
