@@ -784,7 +784,20 @@ Works also with blocked alignments."
     )
   )
 
-
+(defun ralee-alignment-width ()
+  "calculate the width of the alignment"
+  (let (width)
+    (save-excursion
+      (ralee-find-first-column)
+      (let ((first (current-column)))
+	(end-of-line)
+	(setq width (- (current-column) first))
+	;;(message (number-to-string width))
+	)
+      )
+    width
+    )
+  )
 
 (provide 'ralee-tools)
 

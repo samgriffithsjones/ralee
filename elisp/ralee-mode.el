@@ -38,6 +38,12 @@
   :group 'ralee
   )
 
+(defcustom ralee-large-alignment-width-cutoff 1000
+  "Cutoff for width of large alignment -- disable some auto update features for speed."
+  :type '(integer)
+  :group 'ralee
+  )
+
 (defvar ralee-url "http://sgjlab.org/ralee/"
   "Url to load for updates.")
 

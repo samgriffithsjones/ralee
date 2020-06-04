@@ -25,7 +25,9 @@
   "move the pointer a screen to the right"
   (interactive)
   (move-to-column (+ (current-column) (/ (* (window-width) 2) 3)))
-  (show-current-residue-number)
+  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+      (show-current-residue-number)
+    )
   )
 
 
@@ -38,7 +40,9 @@
       )
     (move-to-column col)
     )
-  (show-current-residue-number)
+  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+      (show-current-residue-number)
+    )
   )
 
 
@@ -54,7 +58,9 @@
       )
     (move-to-column column)
     )
-  (show-current-residue-number)
+    (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+	(show-current-residue-number)
+      )
   )
 
 
@@ -70,7 +76,9 @@
       )
     (move-to-column column)
     )
-  (show-current-residue-number)
+  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+      (show-current-residue-number)
+    )
   )
 
 
@@ -78,7 +86,9 @@
   "move the pointer one char right"
   (interactive)
   (move-to-column (1+ (current-column)))
-  (show-current-residue-number)
+  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+      (show-current-residue-number)
+    )
   )
 
 
@@ -86,7 +96,9 @@
   "move the pointer one char left"
   (interactive)
   (move-to-column (1- (current-column)))
-  (show-current-residue-number)
+  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+      (show-current-residue-number)
+    )
   )
 
 
@@ -98,7 +110,9 @@
     (goto-line line) ;; why isn't this line-1?
     (move-to-column column)
     )
-  (show-current-residue-number)
+  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+      (show-current-residue-number)
+    )
   )
 
 
@@ -110,7 +124,9 @@
     (goto-line (+ line 2)) ;; why isn't this line+1?
     (move-to-column column)
     )
-  (show-current-residue-number)
+  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+      (show-current-residue-number)
+    )
   )
 
 
@@ -136,7 +152,9 @@
 	(progn
 	  (message "column %s pairs with column %s" (current-column) paired-column)
 	  (move-to-column paired-column)
-	  (show-current-residue-number)
+	  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+	      (show-current-residue-number)
+	    )
 	  )
       (message "No pair!"))))
 
@@ -162,7 +180,9 @@
 	  (switch-to-buffer bname)
 	  (goto-line (1+ line)) ;; not sure why 1+, but seems to work
 	  (move-to-column paired-column)
-	  (show-current-residue-number)
+	  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+	      (show-current-residue-number)
+	    )
 	  (recenter))
       (message "No pair!"))))
 
@@ -171,7 +191,9 @@
   "handle mouse click"
   (interactive)
   (toggle-highlight-current-line)
-  (show-current-residue-number)
+  (if (< (ralee-alignment-width) ralee-large-alignment-width-cutoff)
+      (show-current-residue-number)
+    )
   (check-sscons)
   )
 
